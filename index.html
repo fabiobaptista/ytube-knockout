@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Exemplo Knockout</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<style>
+		.item-checked {
+			color: #ddd;
+			text-decoration: line-through;
+		}
+		.total{
+			padding:0 2px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-2">
+				<br><br>
+				<div class="panel panel-default">
+				<div class="panel-heading"><h4>knockout Bindings</h4></div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="alert alert-warning">Mensagem</div>
+						</div>
+					</div>
+					<div class="row">
+						<!-- COL ESQUERDA -->
+						<div class="col-xs-6">
+							<strong>Lista de Itens</strong>
+							<ul class="list-group">
+  								<li class="list-group-item">
+									 <input type="checkbox"/>
+									Descrição do Item
+								</li>
+								<li class="list-group-item item-checked">
+									 <input type="checkbox" checked/>
+									 Descrição do Item
+								</li>
+							</ul>
+							<div class="col-xs-12">
+								<div class="row">
+									<div class="col-xs-2 total">Total:</div>
+									<div class="col-xs-2 total">1</div>
+									<div class="col-xs-2 total text-center"><input type="checkbox" /> :</div>
+									<div class="col-xs-2 total">1</div>
+									<div class="col-xs-2 total text-center"><input type="checkbox" checked/> :</div>
+									<div class="col-xs-2 total">0</div>
+								</div>
+							</div>							
+						</div>
+						<!-- COL DIREITA -->
+						<div class="col-xs-6">
+							<div class="row">
+								<div class="col-xs-12"><label>Descrição do Item</label></div>
+								<div class="col-xs-12"><input type="text" class="form-control input-sm"/></div>
+								<div class="col-xs-12"><br></div>
+								<div class="col-xs-12"><button class="btn btn-primary btn-block">Incluir item</button></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="knockout-3.4.0.js"></script>
+	<script type="text/javascript">
+		
+		function ViewModel(){
+			
+			var self = this;
+
+		}
+		
+		vm = new ViewModel();
+		
+		ko.applyBindings(vm);
+		
+	</script>
+</body>
+</html>
