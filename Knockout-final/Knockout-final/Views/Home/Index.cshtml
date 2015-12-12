@@ -4,12 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<script type="text/html" id="cabecalho-template">
-    <h3 data-bind="text: tituloCabecalho"></h3>
-    <p>Assunto: <span data-bind="text: assuntoCabecalho"></span></p>
-</script>
-
 <script type="text/html" id="item-lista-template">
     <h3 data-bind="text: titulo"></h3>
     <p data-bind="text: conteudo"></p>
@@ -22,7 +16,13 @@
     <div class="panel-body">
         <!-- Linha superior -->
         <div class="row">
-            <div class="col-xs-12" data-bind="template:{name:'cabecalho-template', data: $data}"></div>
+            <div class="col-xs-12">
+                <label>Titulo</label>
+                <input type="text" data-bind="value: titulo" />
+                <label>Conteudo</label>
+                <input type="text" data-bind="value: conteudo"/>
+                <buttton class="btn btn-primary" data-bind="click: criar">Criar</buttton>
+            </div>
         </div>
         <div class="row">
             <!-- COL ESQUERDA -->
@@ -42,32 +42,54 @@
 </div>
 
 @section JS{
-<script src="@Url.Content("~/Scripts/jquery-2.1.4.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")"></script>
 <script src="@Url.Content("~/Scripts/knockout-3.4.0.js")"></script>
 <script type="text/javascript">
+
+    function Model(titulo, conteudo) {
+        this.titulo = ko.observable(titulo);
+        this.conteudo = ko.observable(titulo);
+        this.status = ko.observable();
+    }
 
     function ViewModel() {
 
         var self = this;
-        self.tituloCabecalho = ko.observable("Titulo");
-        self.assuntoCabecalho = ko.observable("Assunto do cabecalho");
+        self.titulo = ko.observable();
+        self.conteudo = ko.observable();
 
-        self.lista = ko.observableArray([
-		    { titulo: "Titulo item 1", conteudo: "Conteúdo item 1" },
-		    { titulo: "Titulo item 2", conteudo: "Conteúdo item 2" },
-		    { titulo: "Titulo item 3", conteudo: "Conteúdo item 3" },
-        ]);
+        self.lista = ko.observableArray([]);
 
+        //http://localhost:10795/Home/GetList
+        self.carregar = function () {
+            $.post("http://localhost:10795/Home/GetList")
+                .success(function (response) {
+                    self.lista(response);
+                });
+        };
+
+        //http://localhost:10795/Home/Create
+        self.criar = function () {
+
+            var model = new Model(self.titulo(), self.conteudo());
+
+            //self.lista.push(model);
+            $.post("http://localhost:10795/Home/Create", model)
+                .success(function (response) {
+                    self.carregar();
+                    self.titulo("");
+                    self.conteudo("");
+                });
+            
+        }
     }
 
     vm = new ViewModel();
 
     ko.applyBindings(vm);
 
-    $.post("localhost:8080", {})
-	    .success(function (response) {
-		    console.log(response);
-	    });
+    vm.carregar();
+
 
 </script>
 
