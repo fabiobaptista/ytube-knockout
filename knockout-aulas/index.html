@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Exemplo Knockout</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<style>
+		.item-checked {
+			color: #ddd;
+			text-decoration: line-through;
+		}
+		.total{
+			padding:0 2px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-2">
+				<br><br>
+				<div class="panel panel-default">
+				<div class="panel-heading"><h4>Template Bindings</h4></div>
+				<div class="panel-body">
+					<!-- Linha superior -->
+					<div class="row">
+						<div class="col-xs-12" data-bind="template:{name:'cabecalho-template', data: $data}"></div>
+					</div>
+					<div class="row">
+						<!-- COL ESQUERDA -->
+						<div class="col-xs-6">
+							<br/>
+							<ul class="list-group" data-bind="template:{name:'item-lista-template', foreach: lista}"></ul>
+						</div>
+						<!-- COL DIREITA -->
+						<div class="col-xs-6">
+							<div class="row">
+								<div class="col-xs-12">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/html" id="cabecalho-template">
+    	<h3 data-bind="text: tituloCabecalho"></h3>
+    	<p>Assunto: <span data-bind="text: assuntoCabecalho"></span></p>
+	</script>
+	
+	<script type="text/html" id="item-lista-template">
+    	<h3 data-bind="text: titulo"></h3>
+    	<p data-bind="text: conteudo"></p>
+		<hr>
+	</script>
+	
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="knockout-3.4.0.js"></script>
+	<script type="text/javascript">
+		
+		function ViewModel(){
+			
+			var self = this;
+			self.tituloCabecalho = ko.observable("Titulo");
+			self.assuntoCabecalho = ko.observable("Assunto do cabecalho");
+			
+			self.lista = ko.observableArray([
+				{titulo: "Titulo item 1", conteudo:"Conteúdo item 1"},
+				{titulo: "Titulo item 2", conteudo:"Conteúdo item 2"},
+				{titulo: "Titulo item 3", conteudo:"Conteúdo item 3"},
+			]);
+			
+		}
+		
+		vm = new ViewModel();
+		
+		ko.applyBindings(vm);
+		
+		$.post("localhost:8080",{})
+			.success(function(response){
+				console.log(response);
+			});
+		
+	</script>
+</body>
+</html>
