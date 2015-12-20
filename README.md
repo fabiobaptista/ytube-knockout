@@ -1,4 +1,4 @@
-# videos-knockout
+# Curso introdutório sobre knockout
 
 Código utilizado nos vídeos sobre a biblioteca Knockout JS
 
